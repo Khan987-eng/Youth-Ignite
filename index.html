@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Youth Ignite Ujnu – CBT Test</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #d4ffe8, #f0fff7);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+    }
+
+    .header {
+      width: 100%;
+      background-color: #2e8b57;
+      color: white;
+      text-align: center;
+      padding: 20px 10px;
+      font-size: 22px;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container {
+      background: white;
+      margin-top: 30px;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.08);
+      width: 90%;
+      max-width: 420px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #2e8b57;
+      margin-bottom: 20px;
+    }
+
+    input, select, button {
+      width: 100%;
+      margin: 10px 0;
+      padding: 12px;
+      font-size: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      background-color: #2e8b57;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #246d45;
+      transform: scale(1.02);
+    }
+
+    #response {
+      margin-top: 20px;
+      padding: 16px;
+      font-size: 15px;
+      color: #2e8b57;
+      background-color: #f1fff4;
+      border: 2px dashed #2e8b57;
+      border-radius: 10px;
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    .donation-message {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #333;
+      background-color: #e8f7ec;
+      border-left: 4px solid #2e8b57;
+      padding: 10px 15px;
+      text-align: left;
+      border-radius: 8px;
+    }
+
+    .donation-message strong {
+      color: #2e8b57;
+    }
+
+    .success-icon {
+      font-size: 26px;
+      color: #2e8b57;
+      animation: pop 0.4s ease-out;
+    }
+
+    .motivational {
+      margin-top: 10px;
+      font-style: italic;
+      color: #555;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0.2); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    Youth Ignite Ujnu – CBT Test
+  </div>
+
+  <div class="form-container">
+    <h2>CBT Registration</h2>
+    <form id="form">
+      <input name="name" placeholder="Student Name" required />
+      <input name="rollno" placeholder="Roll Number" required />
+      <select name="grade" required>
+        <option value="">Select Grade</option>
+        <option value="6">6th</option>
+        <option value="7">7th</option>
+        <option value="8">8th</option>
+        <option value="9">9th</option>
+        <option value="10">10th</option>
+      </select>
+      <input name="school" placeholder="School Name" required />
+      <button type="submit">Submit</button>
+    </form>
+    <div id="response"></div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbwKGKwIpdeK6JuYJkZLBVydtarJ8i6ijDyogQOmjUIHEosGivuIV0xQEIjogcJg_99bSA/exec';
+      const form = document.getElementById('form');
+      const responseEl = document.getElementById('response');
+
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const name = formData.get("name").trim();
+
+        responseEl.innerHTML = `
+          <div class="success-icon">✅</div>
+          <strong>${name}, you have successfully registered for the CBT Test organized by Youth Ignite Ujnu.</strong>
+          <div class="motivational">We believe in your potential — good luck!</div>
+          <div class="donation-message">
+            💚 Want to support our mission?<br>
+            Send your contribution via <strong>Easypaisa</strong>:<br>
+            📱 <strong>03497630901</strong><br>
+            Account Holder: <strong>Hujjat Ur Rahman</strong><br>
+            Your support empowers education!
+          </div>
+        `;
+
+        fetch(scriptURL, {
+          method: 'POST',
+          body: formData
+        }).then(() => form.reset())
+          .catch(() => {
+            responseEl.innerHTML = "❌ Something went wrong. Please try again.";
+          });
+      });
+    });
+  </script>
+
+</body>
+</html>
